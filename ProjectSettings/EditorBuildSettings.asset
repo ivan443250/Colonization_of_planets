@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 858fc8e94efca0f4aafdce8a098735d2
+  - enabled: 1
     path: Assets/Scenes/GameOnPlanet.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/GameInRocket/MainRocketMenu.unity
+    guid: ca762f5fba72f1e4ab1cbc03e9990525
   m_configObjects: {}

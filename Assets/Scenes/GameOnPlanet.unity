@@ -3458,7 +3458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 25
   _jumpForce: 55
-  _groundCheckRadius: 0.5
+  _groundCheckRadius: 1
   _maxAdditionalJumps: 1
   _groundCheckPoint: {fileID: 1595629808}
   _ground:

@@ -2,12 +2,10 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private BlockHandler _blockHandler;
 
-    private void Invoke()
+    private void Start()
     {
-        _blockHandler.Initialize();
+
     }
 
     private void Update()

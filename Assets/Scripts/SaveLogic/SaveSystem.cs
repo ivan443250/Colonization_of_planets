@@ -2,16 +2,16 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveSystem
+public class SaveSystem<T>
 {
     private readonly string _filePath;
 
-    public SaveSystem(string savedFilename) 
+    public SaveSystem(string saveFilename) 
     {
-        _filePath = Application.persistentDataPath + $"/{savedFilename}.dat";
+        _filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
     }
 
-    public void Save<T>(T saveData) where T : ISaveData
+    public void Save(T saveData)
     {
         using (FileStream file = File.Create(_filePath))
         {
@@ -19,7 +19,7 @@ public class SaveSystem
         }
     }
 
-    public T Load<T>() where T : ISaveData
+    public T Load() 
     {
         T saveData;
         using (FileStream file = File.Open(_filePath, FileMode.Open))

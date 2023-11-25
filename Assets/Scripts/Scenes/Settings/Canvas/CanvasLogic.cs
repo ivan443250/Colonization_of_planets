@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Settings
@@ -8,8 +9,6 @@ namespace Settings
     {
         [SerializeField]
         private TextMeshProUGUI[] _panelTitles;
-        [SerializeField]
-        private Button _backButton;
 
         [SerializeField]
         private GameObject[] _panels;
@@ -21,8 +20,18 @@ namespace Settings
 
         public void Initialize()
         {
+            SaveData _saveData = SaveSystem.Load("GameSettings");
+            if (_saveData == null )
+            {
+                _panels[0].GetComponent<GameControlPanel>().Initialize();
+            }
+            else
+            {
+                _panels[0].GetComponent<GameControlPanel>().Initialize(_saveData.Lines);
+            }
+
             _lastTimeSelectedPanel = 0;
-            _panels[0].GetComponent<GameControlPanel>().Initialize(new KeyCode[4] { KeyCode.A, KeyCode.D, KeyCode.Space, KeyCode.LeftShift });
+
             for (int i = 1; i < _panels.Length; i++)
             {
                 _panels[i].gameObject.SetActive(false);
@@ -39,6 +48,18 @@ namespace Settings
             _panelTitles[_currentSelctedPanel].color = Color.white;
             _panelTitles[newSelectedPanel].color = Color.yellow;
             _currentSelctedPanel = newSelectedPanel;
+        }
+
+        public void ResetToDefaultSettings()
+        {
+            _panels[0].GetComponent<GameControlPanel>().ResetToDefaultSettings();
+        }
+
+        public void SaveSettingsChanges()
+        {
+            SaveData _saveData = new SaveData(_panels[0].GetComponent<GameControlPanel>().GetSettingsChanges());
+            SaveSystem.Save(_saveData, _saveFileName);
+            SceneManager.LoadScene(0);
         }
     }
 }

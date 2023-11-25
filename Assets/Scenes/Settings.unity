@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 68011155}
   - component: {fileID: 68011154}
   m_Layer: 5
-  m_Name: BackButton
+  m_Name: SaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275, y: 119}
+  m_AnchoredPosition: {x: 318, y: 152}
   m_SizeDelta: {x: 391.2754, y: 73.364075}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &68011154
@@ -205,7 +205,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 68011155}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1546778162}
+        m_TargetAssemblyTypeName: Settings.CanvasLogic, Assembly-CSharp
+        m_MethodName: SaveSettingsChanges
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &68011155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,7 +231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -229,7 +241,7 @@ MonoBehaviour:
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
-  m_FillCenter: 1
+  m_FillCenter: 0
   m_FillMethod: 4
   m_FillAmount: 1
   m_FillClockwise: 1
@@ -1153,7 +1165,6 @@ RectTransform:
   - {fileID: 1481423864}
   - {fileID: 338480528}
   - {fileID: 1102958706}
-  - {fileID: 368971143}
   m_Father: {fileID: 412198757}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1247,18 +1258,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 368971142}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 680009673}
-  m_Father: {fileID: 360830539}
+  m_Father: {fileID: 1546778161}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 206}
-  m_SizeDelta: {x: 602.3977, y: 149.0648}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 318, y: 0}
+  m_SizeDelta: {x: 537.1809, y: 132.9267}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &368971144
 MonoBehaviour:
@@ -1304,8 +1315,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 360830542}
-        m_TargetAssemblyTypeName: Settings.GameControlPanel, Assembly-CSharp
+      - m_Target: {fileID: 1546778162}
+        m_TargetAssemblyTypeName: Settings.CanvasLogic, Assembly-CSharp
         m_MethodName: ResetToDefaultSettings
         m_Mode: 1
         m_Arguments:
@@ -1907,7 +1918,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041D\u0430\u0437\u0430\u0434"
+  m_text: "\u0421\u043E\u0445\u0440\u0430\u043D\u0438\u0442\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2020,7 +2031,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 295, y: -298}
+  m_AnchoredPosition: {x: 315, y: -303}
   m_SizeDelta: {x: 391.2754, y: 73.3641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &662216726
@@ -2288,7 +2299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 295, y: -209}
+  m_AnchoredPosition: {x: 315, y: -214}
   m_SizeDelta: {x: 391.2754, y: 73.3641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &682262762
@@ -4127,6 +4138,7 @@ RectTransform:
   - {fileID: 1875395683}
   - {fileID: 682262761}
   - {fileID: 662216725}
+  - {fileID: 368971143}
   - {fileID: 68011153}
   - {fileID: 412198757}
   m_Father: {fileID: 0}
@@ -4152,7 +4164,6 @@ MonoBehaviour:
   - {fileID: 223493598}
   - {fileID: 1242681306}
   - {fileID: 536298822}
-  _backButton: {fileID: 68011154}
   _panels:
   - {fileID: 360830538}
   - {fileID: 1099050841}
@@ -4662,7 +4673,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 295, y: -117}
+  m_AnchoredPosition: {x: 315, y: -122}
   m_SizeDelta: {x: 391.2754, y: 73.3641}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1875395684

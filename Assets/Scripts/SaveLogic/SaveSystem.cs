@@ -17,6 +17,8 @@ public static class SaveSystem
     {
         string filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
         SaveData saveData;
+        if (File.Exists(filePath) == false)
+            return null;
         using (FileStream file = File.Open(filePath, FileMode.Open))
         {
             object loadData = new BinaryFormatter().Deserialize(file);

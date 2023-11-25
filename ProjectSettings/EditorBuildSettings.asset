@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameInRocket/MainRocketMenu.unity
     guid: ca762f5fba72f1e4ab1cbc03e9990525
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: aa7a6d74ed616cf478e2d283974cb07d
   m_configObjects: {}

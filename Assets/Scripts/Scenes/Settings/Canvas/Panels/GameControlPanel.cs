@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,13 +18,32 @@ namespace Settings
         private bool _isChangeButtonKey;
         private int _currentChangeControlKeyIndex;
 
-        public void Initialize(KeyCode[] controlKeys)
+        public void Initialize(List<string> controlKeysInStr)
         {
+            _controlKeys = new KeyCode[4]
+            { 
+                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[0]),
+                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[1]),
+                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[2]),
+                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[3])
+            };
             _isChangeButtonKey = false;
             _currentChangeControlKeyIndex = 0;
-            _controlKeys = controlKeys;
             _controlButtonsText = new TextMeshProUGUI[4];
             for (int i = 0;  i < _controlButtons.Length; i++)
+            {
+                _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
+                _controlButtonsText[i].text = _controlKeys[i].ToString();
+            }
+        }
+
+        public void Initialize()
+        {
+            _controlKeys = GameControlPanelDefaultSettings.ControlKeys;
+            _isChangeButtonKey = false;
+            _currentChangeControlKeyIndex = 0;
+            _controlButtonsText = new TextMeshProUGUI[4];
+            for (int i = 0; i < _controlButtons.Length; i++)
             {
                 _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
                 _controlButtonsText[i].text = _controlKeys[i].ToString();
@@ -46,7 +67,11 @@ namespace Settings
             {
                 _controlButtonsText[i].text = _controlKeys[i].ToString();
             }
-            Debug.Log("reset");
+        }
+
+        public List<string> GetSettingsChanges()
+        {
+            return new List<string> { _controlKeys[0].ToString(), _controlKeys[1].ToString(), _controlKeys[2].ToString(), _controlKeys[3].ToString() };
         }
 
         private void OnGUI()

@@ -1,12 +1,19 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class SaveData
 {
-    public float[] Numbers;
-    public string[] Lines;
+    public List<float> Numbers;
+    public List<string> Lines;
 
-    public SaveData(float[] numbers, string[] lines)
+    public SaveData(List<string> lines)
+    {
+        Numbers = null;
+        Lines = lines;
+    }
+
+    public SaveData(List<float> numbers, List<string> lines)
     {
         Numbers = numbers;
         Lines = lines;

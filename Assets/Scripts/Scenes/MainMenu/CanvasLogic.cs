@@ -35,7 +35,7 @@ namespace MainMenu
 
         private void LoadSettingsScene()
         {
-
+            SceneManager.LoadScene(3);
         }
 
         private void CloseGame()

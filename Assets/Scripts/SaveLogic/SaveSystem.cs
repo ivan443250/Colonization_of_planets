@@ -2,30 +2,25 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class SaveSystem<T>
+public static class SaveSystem
 {
-    private readonly string _filePath;
-
-    public SaveSystem(string saveFilename) 
+    public static void Save(SaveData saveData, string saveFilename)
     {
-        _filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
-    }
-
-    public void Save(T saveData)
-    {
-        using (FileStream file = File.Create(_filePath))
+        string filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
+        using (FileStream file = File.Create(filePath))
         {
             new BinaryFormatter().Serialize(file, saveData);
         }
     }
 
-    public T Load() 
+    public static SaveData Load(string saveFilename)
     {
-        T saveData;
-        using (FileStream file = File.Open(_filePath, FileMode.Open))
+        string filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
+        SaveData saveData;
+        using (FileStream file = File.Open(filePath, FileMode.Open))
         {
             object loadData = new BinaryFormatter().Deserialize(file);
-            saveData = (T)loadData;
+            saveData = (SaveData)loadData;
         }
         return saveData;
     }

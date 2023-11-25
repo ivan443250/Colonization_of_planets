@@ -7,16 +7,40 @@ namespace MainMenu
     public class CanvasLogic : MonoBehaviour
     {
         [SerializeField]
-        private Button _startButton;
+        private Button _continueButton;
+        [SerializeField]
+        private Button _newGameButton;
+        [SerializeField]
+        private Button _settingsButton;
+        [SerializeField]
+        private Button _exitButton;
 
         public void Initialize()
         {
-            _startButton.onClick.AddListener(LoadGameOnPlanet);
+            _continueButton.onClick.AddListener(LoadGameOnPlanetScene);
+            _newGameButton.onClick.AddListener(LoadGameCellsScene);
+            _settingsButton.onClick.AddListener(LoadSettingsScene);
+            _exitButton.onClick.AddListener(CloseGame);
         }
 
-        private void LoadGameOnPlanet()
+        private void LoadGameOnPlanetScene()
         {
             SceneManager.LoadScene(1);
+        }
+
+        private void LoadGameCellsScene()
+        {
+
+        }
+
+        private void LoadSettingsScene()
+        {
+
+        }
+
+        private void CloseGame()
+        {
+            Application.Quit();
         }
     }
 }

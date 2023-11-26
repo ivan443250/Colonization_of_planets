@@ -7,7 +7,7 @@ namespace GameOnPlanet
     {
         [SerializeField]
         private float _maxSpeed;
-        [SerializeField, Range(0f, 1f)]
+        [SerializeField, Range(0f, 2f)]
         private float _currentSpeedChange;
         [SerializeField, Range(0f, 1f)]
         private float _defaultSpeedChange;
@@ -49,21 +49,6 @@ namespace GameOnPlanet
 
         private void Update()
         {
-            if (Input.GetKey(_leftKey) && Input.GetKey(_rightKey) == false)
-            {
-                if (_horisontalInput > 0)
-                    _horisontalInput = 0;
-                if (_horisontalInput > -_maxSpeed)
-                    _horisontalInput -= _currentSpeedChange;
-            } else if (Input.GetKey(_rightKey) && Input.GetKey(_leftKey) == false)
-            {
-                if (_horisontalInput < 0)
-                    _horisontalInput = 0;
-                if (_horisontalInput < _maxSpeed)
-                    _horisontalInput += _currentSpeedChange;
-            } else 
-                _horisontalInput = 0f;
-
             bool isGrounded = IsGrounded();
 
             if (isGrounded)
@@ -89,6 +74,23 @@ namespace GameOnPlanet
 
         private void FixedUpdate()
         {
+            if (Input.GetKey(_leftKey) && Input.GetKey(_rightKey) == false)
+            {
+                if (_horisontalInput > 0)
+                    _horisontalInput = 0;
+                if (_horisontalInput > -_maxSpeed)
+                    _horisontalInput -= _currentSpeedChange;
+            }
+            else if (Input.GetKey(_rightKey) && Input.GetKey(_leftKey) == false)
+            {
+                if (_horisontalInput < 0)
+                    _horisontalInput = 0;
+                if (_horisontalInput < _maxSpeed)
+                    _horisontalInput += _currentSpeedChange;
+            }
+            else
+                _horisontalInput = 0f;
+
             if (_rigidBody.velocity.y <= 0)
                 _animator.SetBool(PlayerAnimatorParameters.IsJump, false);
 

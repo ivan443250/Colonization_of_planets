@@ -2157,8 +2157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxSpeed: 20
-  _currentSpeedChange: 0.214
-  _defaultSpeedChange: 0.188
+  _currentSpeedChange: 2
+  _defaultSpeedChange: 0.812
   _jumpForce: 120
   _groundCheckRadius: 1
   _maxAdditionalJumps: 1

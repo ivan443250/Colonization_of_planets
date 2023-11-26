@@ -6,6 +6,8 @@ namespace Settings
 {
     public class SoundsPanel : MonoBehaviour
     {
+        public float[] GetSettingsChanges => new float[] { _volumeSlider.value, _soundSlider.value, _musicSlider.value };
+
         [SerializeField]
         private Slider _volumeSlider;
         [SerializeField]
@@ -13,9 +15,9 @@ namespace Settings
         [SerializeField]
         private Slider _musicSlider;
 
-        public void RecieveSettings(List<float> sliderValues)
+        public void RecieveSettings(float[] sliderValues)
         {
-            if (sliderValues != null && sliderValues.Count == 3)
+            if (sliderValues != null && sliderValues.Length == 3)
             {
                 _volumeSlider.value = sliderValues[0];
                 _soundSlider.value = sliderValues[1];
@@ -30,11 +32,6 @@ namespace Settings
             _volumeSlider.value = DefaultSettings.SoundsSliders[0];
             _soundSlider.value = DefaultSettings.SoundsSliders[1];
             _musicSlider.value = DefaultSettings.SoundsSliders[2];
-        }
-
-        public List<float> GetSettingsChanges()
-        {
-            return new List<float> { _volumeSlider.value, _soundSlider.value, _musicSlider.value};
         }
     }
 }

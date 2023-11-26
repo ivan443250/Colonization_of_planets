@@ -9,6 +9,8 @@ namespace Settings
 {
     public class GameControlPanel : MonoBehaviour
     {
+        public KeyCode[] GetSettingsChanges => _controlKeys;
+
         [SerializeField]
         private TextMeshProUGUI[] _controlTexts;
         [SerializeField]
@@ -27,15 +29,10 @@ namespace Settings
                 _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public void RecieveSettings(List<string> controlKeysInStr)
+        public void RecieveSettings(KeyCode[] controlKeys)
         {
-            if (controlKeysInStr == null)
-                ResetToDefaultSettings();
-            else
-            {
-                _controlKeys = ParseSettingsChanges(controlKeysInStr);
-                CorrectUi();
-            }
+            _controlKeys = controlKeys;
+            CorrectUi();
         }
 
         public void SetButton(int currentChangeControlKeyIndex)
@@ -51,20 +48,6 @@ namespace Settings
         {
             _controlKeys = DefaultSettings.ControlKeys;
             CorrectUi();
-        }
-
-        public List<string> GetSettingsChanges()
-        {
-            return new List<string> { _controlKeys[0].ToString(), _controlKeys[1].ToString(), _controlKeys[2].ToString(), _controlKeys[3].ToString() };
-        }
-
-        private KeyCode[] ParseSettingsChanges(List<string> str)
-        {
-            int strCount = str.Count;
-            KeyCode[] answer = new KeyCode[strCount];
-            for (int i = 0; i < strCount; i++)
-                answer[i] = (KeyCode)Enum.Parse(typeof(KeyCode), str[i]);
-            return answer;
         }
 
         private void OnGUI()

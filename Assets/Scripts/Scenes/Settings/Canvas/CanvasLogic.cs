@@ -15,6 +15,7 @@ namespace Settings
         private GameObject[] _panels;
 
         private GameControlPanel _gameControlPanel;
+        private DisplayPanel _displayPanel;
         private SoundsPanel _soundsPanel;
 
         private int _currentSelctedPanel;
@@ -22,10 +23,11 @@ namespace Settings
         public void Initialize()
         {
             _gameControlPanel = _panels[0].GetComponent<GameControlPanel>();
-
+            _displayPanel = _panels[1].GetComponent<DisplayPanel>();
             _soundsPanel = _panels[2].GetComponent<SoundsPanel>();
 
             _gameControlPanel.Initialize();
+            _displayPanel.Initialize();
 
             UnpackSaveData();
 
@@ -51,48 +53,37 @@ namespace Settings
         public void ResetToDefaultSettings()
         {
             _gameControlPanel.ResetToDefaultSettings();
+            _displayPanel.ResetToDefaultSettings();
             _soundsPanel.ResetToDefaultSettings();
         }
 
         public void SaveSettingsChanges()
         {
-            SaveData _saveData = WrapUpSaveData();
-
-            SaveSystem.Save(_saveData, SaveFilenames.GameSettings);
+            WrapUpSaveData();
             SceneManager.LoadScene(0);
         }
 
-        private SaveData WrapUpSaveData()
+        private void WrapUpSaveData()
         {
-            List<int>[] _saveDataIntNumbers = new List<int>[1];
-            _saveDataIntNumbers[0] = new List<int> { _currentSelctedPanel};
-
-            List<float>[] _saveDataFloatNumbers = new List<float>[1];
-            _saveDataFloatNumbers[0] = _soundsPanel.GetSettingsChanges();
-
-            List<string>[] _saveDataLines = new List<string>[1];
-            _saveDataLines[0] = _gameControlPanel.GetSettingsChanges();
-
-            return new SaveData(_saveDataIntNumbers, _saveDataFloatNumbers, _saveDataLines);
+            SettingsData _settingsData = new SettingsData();
+            _settingsData.CurrentSelctedPanel = _currentSelctedPanel;
+            _settingsData.ControlKeys = _gameControlPanel.GetSettingsChanges;
+            _displayPanel.GetSettingsChanges(out bool isSynchronizationToggleOn, out int selectedGraphicIndex);
+            _settingsData.IsSynchronizationToggleOn = isSynchronizationToggleOn;
+            _settingsData.SelectedGraphicIndex = selectedGraphicIndex;
+            _settingsData.SoundSliderValues = _soundsPanel.GetSettingsChanges;
+            DataHolder.SettingsData = _settingsData;
         }
 
         private void UnpackSaveData()
         {
-            SaveData _saveData = SaveSystem.Load(SaveFilenames.GameSettings);
-            if (_saveData != null)
-            {
-                if (_saveData.IntNumbers != null)
-                    _currentSelctedPanel = _saveData.IntNumbers[0][0];
-                else
-                    _currentSelctedPanel = 0;
+            SettingsData _settingsData = DataHolder.SettingsData;
 
-                if (_saveData.FloatNumbers != null)
-                    _soundsPanel.RecieveSettings(_saveData.FloatNumbers[0]);
-                else
-                    _soundsPanel.RecieveSettings(null);
+            _currentSelctedPanel = _settingsData.CurrentSelctedPanel;
 
-                _gameControlPanel.RecieveSettings(_saveData.Lines[0]);
-            }
+            _gameControlPanel.RecieveSettings(_settingsData.ControlKeys);
+            _displayPanel.RecieveSettings(_settingsData.IsSynchronizationToggleOn, _settingsData.SelectedGraphicIndex);
+            _soundsPanel.RecieveSettings(_settingsData.SoundSliderValues);
         }
     }
 }

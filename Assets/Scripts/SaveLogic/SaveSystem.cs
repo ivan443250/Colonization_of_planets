@@ -26,4 +26,10 @@ public static class SaveSystem
         }
         return saveData;
     }
+
+    public static void Delete(string saveFilename)
+    {
+        string filePath = Application.persistentDataPath + $"/{saveFilename}.dat";
+        File.Delete(filePath);
+    }
 }

@@ -40,19 +40,11 @@ namespace GameOnPlanet
             _animator = GetComponent<Animator>();
             _isTurnedRight = true;
             _currentAdditionalJumps = _maxAdditionalJumps;
-            SaveData _saveData = SaveSystem.Load(SaveFilenames.GameSettings);
-            if (_saveData != null )
-            {
-                if (_saveData.Lines != null)
-                {
-                    if (_saveData.Lines[0] != null)
-                    {
-                        _leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][0]);
-                        _rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][1]);
-                        _jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][2]);
-                    }
-                }
-            }
+            SettingsData _settingsData = DataHolder.SettingsData;
+            _leftKey = _settingsData.ControlKeys[0];
+            _rightKey = _settingsData.ControlKeys[1];
+            _jumpKey = _settingsData.ControlKeys[2];
+            _runKey = _settingsData.ControlKeys[3];
         }
 
         private void Update()

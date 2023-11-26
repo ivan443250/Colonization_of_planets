@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,32 +14,29 @@ namespace Settings
         [SerializeField]
         private GameObject[] _panels;
 
-        private const string _saveFileName = "GameSettings";
+        private GameControlPanel _gameControlPanel;
+        private SoundsPanel _soundsPanel;
 
-        private int _lastTimeSelectedPanel;
         private int _currentSelctedPanel;
 
         public void Initialize()
         {
-            SaveData _saveData = SaveSystem.Load("GameSettings");
-            if (_saveData == null )
-            {
-                _panels[0].GetComponent<GameControlPanel>().Initialize();
-            }
-            else
-            {
-                _panels[0].GetComponent<GameControlPanel>().Initialize(_saveData.Lines);
-            }
+            _gameControlPanel = _panels[0].GetComponent<GameControlPanel>();
 
-            _lastTimeSelectedPanel = 0;
+            _soundsPanel = _panels[2].GetComponent<SoundsPanel>();
 
-            for (int i = 1; i < _panels.Length; i++)
+            _gameControlPanel.Initialize();
+
+            UnpackSaveData();
+
+            for (int i = 0; i < _panels.Length; i++)
             {
                 _panels[i].gameObject.SetActive(false);
                 _panelTitles[i].color = Color.white;
             }
-            _panels[_lastTimeSelectedPanel].gameObject.SetActive(true);
-            _panelTitles[_lastTimeSelectedPanel].color = Color.yellow;
+
+            _panels[_currentSelctedPanel].gameObject.SetActive(true);
+            _panelTitles[_currentSelctedPanel].color = Color.yellow;
         }
 
         public void OnSelectedPanelChanged(int newSelectedPanel)
@@ -52,14 +50,49 @@ namespace Settings
 
         public void ResetToDefaultSettings()
         {
-            _panels[0].GetComponent<GameControlPanel>().ResetToDefaultSettings();
+            _gameControlPanel.ResetToDefaultSettings();
+            _soundsPanel.ResetToDefaultSettings();
         }
 
         public void SaveSettingsChanges()
         {
-            SaveData _saveData = new SaveData(_panels[0].GetComponent<GameControlPanel>().GetSettingsChanges());
-            SaveSystem.Save(_saveData, _saveFileName);
+            SaveData _saveData = WrapUpSaveData();
+
+            SaveSystem.Save(_saveData, SaveFilenames.GameSettings);
             SceneManager.LoadScene(0);
+        }
+
+        private SaveData WrapUpSaveData()
+        {
+            List<int>[] _saveDataIntNumbers = new List<int>[1];
+            _saveDataIntNumbers[0] = new List<int> { _currentSelctedPanel};
+
+            List<float>[] _saveDataFloatNumbers = new List<float>[1];
+            _saveDataFloatNumbers[0] = _soundsPanel.GetSettingsChanges();
+
+            List<string>[] _saveDataLines = new List<string>[1];
+            _saveDataLines[0] = _gameControlPanel.GetSettingsChanges();
+
+            return new SaveData(_saveDataIntNumbers, _saveDataFloatNumbers, _saveDataLines);
+        }
+
+        private void UnpackSaveData()
+        {
+            SaveData _saveData = SaveSystem.Load(SaveFilenames.GameSettings);
+            if (_saveData != null)
+            {
+                if (_saveData.IntNumbers != null)
+                    _currentSelctedPanel = _saveData.IntNumbers[0][0];
+                else
+                    _currentSelctedPanel = 0;
+
+                if (_saveData.FloatNumbers != null)
+                    _soundsPanel.RecieveSettings(_saveData.FloatNumbers[0]);
+                else
+                    _soundsPanel.RecieveSettings(null);
+
+                _gameControlPanel.RecieveSettings(_saveData.Lines[0]);
+            }
         }
     }
 }

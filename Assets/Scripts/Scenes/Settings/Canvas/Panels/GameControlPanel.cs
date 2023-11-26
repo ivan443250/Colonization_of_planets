@@ -18,42 +18,29 @@ namespace Settings
         private bool _isChangeButtonKey;
         private int _currentChangeControlKeyIndex;
 
-        public void Initialize(List<string> controlKeysInStr)
-        {
-            _controlKeys = new KeyCode[4]
-            { 
-                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[0]),
-                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[1]),
-                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[2]),
-                (KeyCode)Enum.Parse(typeof(KeyCode), controlKeysInStr[3])
-            };
-            _isChangeButtonKey = false;
-            _currentChangeControlKeyIndex = 0;
-            _controlButtonsText = new TextMeshProUGUI[4];
-            for (int i = 0;  i < _controlButtons.Length; i++)
-            {
-                _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                _controlButtonsText[i].text = _controlKeys[i].ToString();
-            }
-        }
-
         public void Initialize()
         {
-            _controlKeys = GameControlPanelDefaultSettings.ControlKeys;
             _isChangeButtonKey = false;
             _currentChangeControlKeyIndex = 0;
             _controlButtonsText = new TextMeshProUGUI[4];
             for (int i = 0; i < _controlButtons.Length; i++)
-            {
                 _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
-                _controlButtonsText[i].text = _controlKeys[i].ToString();
+        }
+
+        public void RecieveSettings(List<string> controlKeysInStr)
+        {
+            if (controlKeysInStr == null)
+                ResetToDefaultSettings();
+            else
+            {
+                _controlKeys = ParseSettingsChanges(controlKeysInStr);
+                CorrectUi();
             }
         }
 
         public void SetButton(int currentChangeControlKeyIndex)
         {
-            _controlButtonsText[_currentChangeControlKeyIndex].text = _controlKeys[_currentChangeControlKeyIndex].ToString();
-            _controlButtonsText[_currentChangeControlKeyIndex].color = Color.white;
+            CorrectUi();
             _currentChangeControlKeyIndex = currentChangeControlKeyIndex;
             _controlButtonsText[_currentChangeControlKeyIndex].text = "¬ведите любую клавишу";
             _controlButtonsText[_currentChangeControlKeyIndex].color = Color.yellow;
@@ -62,16 +49,22 @@ namespace Settings
 
         public void ResetToDefaultSettings()
         {
-            _controlKeys = GameControlPanelDefaultSettings.ControlKeys;
-            for (int i = 0; i < _controlButtons.Length; i++)
-            {
-                _controlButtonsText[i].text = _controlKeys[i].ToString();
-            }
+            _controlKeys = DefaultSettings.ControlKeys;
+            CorrectUi();
         }
 
         public List<string> GetSettingsChanges()
         {
             return new List<string> { _controlKeys[0].ToString(), _controlKeys[1].ToString(), _controlKeys[2].ToString(), _controlKeys[3].ToString() };
+        }
+
+        private KeyCode[] ParseSettingsChanges(List<string> str)
+        {
+            int strCount = str.Count;
+            KeyCode[] answer = new KeyCode[strCount];
+            for (int i = 0; i < strCount; i++)
+                answer[i] = (KeyCode)Enum.Parse(typeof(KeyCode), str[i]);
+            return answer;
         }
 
         private void OnGUI()
@@ -80,17 +73,23 @@ namespace Settings
             if (currentEvent.isKey && _isChangeButtonKey)
             {
                 _controlKeys[_currentChangeControlKeyIndex] = currentEvent.keyCode;
-                _controlButtonsText[_currentChangeControlKeyIndex].text = currentEvent.keyCode.ToString();
-                _controlButtonsText[_currentChangeControlKeyIndex].color = Color.white;
+                CorrectUi();
                 _isChangeButtonKey = false;
             }
             else if (currentEvent.isMouse && _isChangeButtonKey)
             {
-                _controlButtonsText[_currentChangeControlKeyIndex].text = _controlKeys[_currentChangeControlKeyIndex].ToString();
-                _controlButtonsText[_currentChangeControlKeyIndex].color = Color.white;
+                CorrectUi();
                 _isChangeButtonKey = false;
             }
         }
 
+        private void CorrectUi()
+        {
+            for (int i = 0; i < _controlButtons.Length; i++)
+            {
+                _controlButtonsText[i].text = _controlKeys[i].ToString();
+                _controlButtonsText[i].color = Color.white;
+            }
+        }
     }
 }

@@ -15,7 +15,11 @@ namespace GameOnPlanet
             _interactionButton.gameObject.SetActive(false);
             show.AddListener(ShowInteractionButton);
             hide.AddListener(HideInteractionButton);
-            _interactionButton.onClick.AddListener(LoadGameInRocket);
+        }
+
+        public void LoadScene(int sceneIndex)
+        {
+            SceneManager.LoadScene(sceneIndex);
         }
 
         private void ShowInteractionButton()
@@ -26,11 +30,6 @@ namespace GameOnPlanet
         private void HideInteractionButton()
         {
             _interactionButton.gameObject.SetActive(false);
-        }
-
-        private void LoadGameInRocket()
-        {
-            SceneManager.LoadScene(2);
         }
     }
 }

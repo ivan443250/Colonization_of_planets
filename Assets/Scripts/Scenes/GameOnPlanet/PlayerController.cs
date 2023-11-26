@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GameOnPlanet
@@ -5,7 +6,11 @@ namespace GameOnPlanet
     public class PlayerController : MonoBehaviour
     {
         [SerializeField]
-        private float _speed;
+        private float _maxSpeed;
+        [SerializeField, Range(0f, 1f)]
+        private float _currentSpeedChange;
+        [SerializeField, Range(0f, 1f)]
+        private float _defaultSpeedChange;
         [SerializeField]
         private float _jumpForce;
         [SerializeField]
@@ -24,17 +29,49 @@ namespace GameOnPlanet
         [SerializeField]
         private LayerMask _ground;
 
+        private KeyCode _leftKey;
+        private KeyCode _rightKey;
+        private KeyCode _jumpKey;
+        private KeyCode _runKey;
+
         public void Initialize()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _isTurnedRight = true;
             _currentAdditionalJumps = _maxAdditionalJumps;
+            SaveData _saveData = SaveSystem.Load(SaveFilenames.GameSettings);
+            if (_saveData != null )
+            {
+                if (_saveData.Lines != null)
+                {
+                    if (_saveData.Lines[0] != null)
+                    {
+                        _leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][0]);
+                        _rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][1]);
+                        _jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][2]);
+                    }
+                }
+            }
         }
 
         private void Update()
         {
-            _horisontalInput = Input.GetAxis(InputConstants.Horizontal);
+            if (Input.GetKey(_leftKey) && Input.GetKey(_rightKey) == false)
+            {
+                if (_horisontalInput > 0)
+                    _horisontalInput = 0;
+                if (_horisontalInput > -_maxSpeed)
+                    _horisontalInput -= _currentSpeedChange;
+            } else if (Input.GetKey(_rightKey) && Input.GetKey(_leftKey) == false)
+            {
+                if (_horisontalInput < 0)
+                    _horisontalInput = 0;
+                if (_horisontalInput < _maxSpeed)
+                    _horisontalInput += _currentSpeedChange;
+            } else 
+                _horisontalInput = 0f;
+
             bool isGrounded = IsGrounded();
 
             if (isGrounded)
@@ -43,7 +80,7 @@ namespace GameOnPlanet
                 _isMainJumpStay = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(_jumpKey))
             {
                 if (isGrounded && _isMainJumpStay)
                 {
@@ -71,7 +108,7 @@ namespace GameOnPlanet
             else
                 _animator.SetBool(PlayerAnimatorParameters.IsRun, true);
 
-            Vector2 moveX = new Vector2(_horisontalInput * _speed, _rigidBody.velocity.y);
+            Vector2 moveX = new Vector2(_horisontalInput, _rigidBody.velocity.y);
 
             if (moveX.x > 0 && _isTurnedRight == false)
             {
@@ -83,6 +120,10 @@ namespace GameOnPlanet
             }
 
             _rigidBody.velocity = moveX;
+            if (_horisontalInput > 0)
+                _horisontalInput -= _defaultSpeedChange;
+            else if (_horisontalInput < 0)
+                _horisontalInput += _defaultSpeedChange;
         }
 
         private void Jump()

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Settings;
 
 namespace GameOnPlanet
 {
@@ -41,10 +42,11 @@ namespace GameOnPlanet
             _isTurnedRight = true;
             _currentAdditionalJumps = _maxAdditionalJumps;
             SettingsData _settingsData = DataHolder.SettingsData;
-            _leftKey = _settingsData.ControlKeys[0];
-            _rightKey = _settingsData.ControlKeys[1];
-            _jumpKey = _settingsData.ControlKeys[2];
-            _runKey = _settingsData.ControlKeys[3];
+            KeyCode[] controlKeys = _settingsData.GameControlPanelDt.GetControlKeys();
+            _leftKey = controlKeys[0];
+            _rightKey = controlKeys[1];
+            _jumpKey = controlKeys[2];
+            _runKey = controlKeys[3];
         }
 
         private void Update()

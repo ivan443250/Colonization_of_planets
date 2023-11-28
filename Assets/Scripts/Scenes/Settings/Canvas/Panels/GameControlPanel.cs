@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +6,7 @@ namespace Settings
 {
     public class GameControlPanel : MonoBehaviour
     {
-        public KeyCode[] GetSettingsChanges => _controlKeys;
+        public GameControlPanelData GetSettingsChanges => new GameControlPanelData(_controlKeys);
 
         [SerializeField]
         private TextMeshProUGUI[] _controlTexts;
@@ -29,9 +26,9 @@ namespace Settings
                 _controlButtonsText[i] = _controlButtons[i].GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        public void RecieveSettings(KeyCode[] controlKeys)
+        public void RecieveSettings(GameControlPanelData gameControlPanelData)
         {
-            _controlKeys = controlKeys;
+            _controlKeys = gameControlPanelData.GetControlKeys();
             CorrectUi();
         }
 

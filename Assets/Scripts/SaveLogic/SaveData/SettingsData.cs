@@ -1,82 +1,72 @@
 using UnityEngine;
-using Settings;
 using System;
 
-public class SettingsData 
+namespace Settings
 {
-    public int CurrentSelctedPanel;
-    public KeyCode[] ControlKeys;
-    public bool IsSynchronizationToggleOn;
-    public int SelectedGraphicIndex;
-    public float[] SoundSliderValues;
-    private SaveData _saveData;
-
-    public SettingsData()
+    [Serializable]
+    public class SettingsData 
     {
-        Load();
-    }
+        public int CurrentSelctedPanel { get; private set; }
+        public GameControlPanelData GameControlPanelDt { get; private set; }
+        public DisplayPanelData DisplayPanelDt { get; private set; }
+        public SoundsPanelData SoundsPanelDt { get; private set; }
 
-    public void Save()
-    {
-        if (_saveData == null)
-            _saveData = new SaveData();
-
-        _saveData.Bools = new bool[][] { new bool[] { IsSynchronizationToggleOn } };
-
-        _saveData.IntNumbers = new int[][] { new int[] { CurrentSelctedPanel }, new int[] { SelectedGraphicIndex } };
-
-        _saveData.Lines = new string[1][] { new string[ControlKeys.Length] };
-        for (int i = 0; i < ControlKeys.Length; i++)
-            _saveData.Lines[0][i] = ControlKeys[i].ToString();
-
-        _saveData.FloatNumbers = new float[1][] { new float[SoundSliderValues.Length] };
-        for (int i = 0; i < SoundSliderValues.Length; i++)
-            _saveData.FloatNumbers[0][i] = SoundSliderValues[i];
-
-        SaveSystem.Save(_saveData, SaveFilenames.GameSettings);
-    }
-
-    public void Load()
-    {
-        if (_saveData != null)
-            return;
-
-        _saveData = SaveSystem.Load(SaveFilenames.GameSettings);
-
-        if (_saveData == null)
+        public SettingsData() 
         {
             CurrentSelctedPanel = DefaultSettings.CurrentSelectedPanel;
-            ControlKeys = DefaultSettings.ControlKeys;
-            IsSynchronizationToggleOn = DefaultSettings.IsSynchronizationToggleOn;
-            SelectedGraphicIndex = DefaultSettings.SelectedGraphicIndex;
-            SoundSliderValues = DefaultSettings.SoundsSliders;
-            return;
+            GameControlPanelDt = new GameControlPanelData(DefaultSettings.ControlKeys);
+            DisplayPanelDt = new DisplayPanelData(DefaultSettings.IsSynchronizationToggleOn, DefaultSettings.SelectedGraphicIndex);
+            SoundsPanelDt = new SoundsPanelData(DefaultSettings.SoundsSlidersValues);
         }
 
-        try
+        public SettingsData(int currentSelctedPanel, GameControlPanelData gameControlPanelDt, DisplayPanelData displayPanelDt, SoundsPanelData soundsPanelDt)
         {
-            IsSynchronizationToggleOn = _saveData.Bools[0][0];
-
-            CurrentSelctedPanel = _saveData.IntNumbers[0][0];
-            SelectedGraphicIndex = _saveData.IntNumbers[1][0];
-
-            ControlKeys = new KeyCode[_saveData.Lines[0].Length];
-            for (int i = 0; i < _saveData.Lines[0].Length; i++)
-                ControlKeys[i] = (KeyCode)Enum.Parse(typeof(KeyCode), _saveData.Lines[0][i]);
-
-            SoundSliderValues = new float[_saveData.FloatNumbers[0].Length];
-            for (int i = 0; i < _saveData.FloatNumbers[0].Length; i++)
-                SoundSliderValues[i] = _saveData.FloatNumbers[0][i];
+            CurrentSelctedPanel = currentSelctedPanel;
+            GameControlPanelDt = gameControlPanelDt;
+            DisplayPanelDt = displayPanelDt;
+            SoundsPanelDt = soundsPanelDt;
         }
-        catch
+    }
+
+    [Serializable]
+    public class GameControlPanelData
+    {
+        private KeyCode[] _controlKeys;
+
+        public GameControlPanelData(KeyCode[] controlKeys)
         {
-            CurrentSelctedPanel = DefaultSettings.CurrentSelectedPanel;
-            ControlKeys = DefaultSettings.ControlKeys;
-            IsSynchronizationToggleOn = DefaultSettings.IsSynchronizationToggleOn;
-            SelectedGraphicIndex = DefaultSettings.SelectedGraphicIndex;
-            SoundSliderValues = DefaultSettings.SoundsSliders;
-            SaveSystem.Delete(SaveFilenames.GameSettings);
+            _controlKeys = controlKeys;
         }
-        
+
+        public KeyCode[] GetControlKeys()
+        {
+            KeyCode[] controlKeys = new KeyCode[_controlKeys.Length];
+            _controlKeys.CopyTo(controlKeys, 0);
+            return controlKeys;
+        }
+    }
+
+    [Serializable]
+    public class DisplayPanelData
+    {
+        public bool _isSynchronizationToggleOn { get; private set; }
+        public int _selectedGraphicIndex { get; private set; }
+
+        public DisplayPanelData(bool isSynchronizationToggleOn, int selectedGraphicIndex)
+        {
+            _isSynchronizationToggleOn = isSynchronizationToggleOn;
+            _selectedGraphicIndex = selectedGraphicIndex;
+        }
+    }
+
+    [Serializable]
+    public class SoundsPanelData
+    {
+        public float[] SoundSliderValues { get; private set; }
+
+        public SoundsPanelData(float[] soundSliderValues)
+        {
+            SoundSliderValues = soundSliderValues;
+        }
     }
 }

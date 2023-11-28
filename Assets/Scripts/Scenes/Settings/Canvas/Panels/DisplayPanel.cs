@@ -6,6 +6,8 @@ namespace Settings
 {
     public class DisplayPanel : MonoBehaviour
     {
+        public DisplayPanelData GetSettingsChanges => new DisplayPanelData(_synchronizationToggle.isOn, _selectedGraphicIndex);
+
         [SerializeField]
         private Toggle _synchronizationToggle;
         [SerializeField]
@@ -30,17 +32,11 @@ namespace Settings
             CorrectUi();
         }
 
-        public void RecieveSettings(bool isToggleOn, int selectedGraphicIndex)
+        public void RecieveSettings(DisplayPanelData displayPanelData)
         {
-            _synchronizationToggle.isOn = isToggleOn;
-            _selectedGraphicIndex = selectedGraphicIndex;
+            _synchronizationToggle.isOn = displayPanelData._isSynchronizationToggleOn;
+            _selectedGraphicIndex = displayPanelData._selectedGraphicIndex;
             CorrectUi();
-        }
-
-        public void GetSettingsChanges(out bool isSynchronizationToggleOn, out int selectedGraphicIndex)
-        {
-            isSynchronizationToggleOn = _synchronizationToggle.isOn;
-            selectedGraphicIndex = _selectedGraphicIndex;
         }
 
         public void ResetToDefaultSettings()

@@ -65,14 +65,13 @@ namespace Settings
 
         private void WrapUpSaveData()
         {
-            SettingsData _settingsData = new SettingsData();
-            _settingsData.CurrentSelctedPanel = _currentSelctedPanel;
-            _settingsData.ControlKeys = _gameControlPanel.GetSettingsChanges;
-            _displayPanel.GetSettingsChanges(out bool isSynchronizationToggleOn, out int selectedGraphicIndex);
-            _settingsData.IsSynchronizationToggleOn = isSynchronizationToggleOn;
-            _settingsData.SelectedGraphicIndex = selectedGraphicIndex;
-            _settingsData.SoundSliderValues = _soundsPanel.GetSettingsChanges;
-            DataHolder.SettingsData = _settingsData;
+            DataHolder.SettingsData = new SettingsData
+            (
+                _currentSelctedPanel,
+                _gameControlPanel.GetSettingsChanges,
+                _displayPanel.GetSettingsChanges,
+                _soundsPanel.GetSettingsChanges
+            );
         }
 
         private void UnpackSaveData()
@@ -81,9 +80,9 @@ namespace Settings
 
             _currentSelctedPanel = _settingsData.CurrentSelctedPanel;
 
-            _gameControlPanel.RecieveSettings(_settingsData.ControlKeys);
-            _displayPanel.RecieveSettings(_settingsData.IsSynchronizationToggleOn, _settingsData.SelectedGraphicIndex);
-            _soundsPanel.RecieveSettings(_settingsData.SoundSliderValues);
+            _gameControlPanel.RecieveSettings(_settingsData.GameControlPanelDt);
+            _displayPanel.RecieveSettings(_settingsData.DisplayPanelDt);
+            _soundsPanel.RecieveSettings(_settingsData.SoundsPanelDt);
         }
     }
 }

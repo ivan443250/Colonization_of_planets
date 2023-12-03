@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23e36d1acb0a17740aa612b068a17f04, type: 3}
   m_Name: RobotCollections
   m_EditorClassIdentifier: 
-  _bodyDatas: []
+  _bodyDatas:
+  - {fileID: 11400000, guid: 59e208938eefbd1428d90b7df47b5f19, type: 2}

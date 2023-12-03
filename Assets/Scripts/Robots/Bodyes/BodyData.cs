@@ -5,12 +5,20 @@ using Robot;
 public class BodyData : ScriptableObject
 {
     [SerializeField]
-    private Node[] _nodes;
-    public Node[] Nodes => _nodes;
+    private Transform _nodeModel;
+    public Transform NodeModel => _nodeModel;
     [SerializeField]
     private Vector2[] _nodesPositions;
     public Vector2[] NodesPositions => _nodesPositions;
     [SerializeField]
     private Transform _model;
     public Transform Model => _model;
+
+    private int _indexInCollection;
+    public int IndexInCollection => _indexInCollection;
+
+    public void SetIndexInCollection(int indexInCollection)
+    {
+        _indexInCollection = indexInCollection;
+    }
 }

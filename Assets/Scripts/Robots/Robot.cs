@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using UnityEngine;
+using static Cinemachine.CinemachineFreeLook;
 
 namespace Robot
 {
@@ -8,13 +10,18 @@ namespace Robot
         private Processor _processor;
         private AdditionalDetail[] _additionalDetails;
 
-        private void Start()
+        public void Initialize(BodyData bodyData)
         {
-            _body = GetComponentInChildren<Body>();
-            _body.Initialize(out Transform initBodyModel);
-            initBodyModel.SetParent(transform);
-            initBodyModel.localPosition = transform.position;
-            initBodyModel.rotation = Quaternion.identity;
+            _body = new GameObject().AddComponent<Body>();
+            _body.transform.parent = transform;
+            _body.transform.localPosition = Vector2.zero;
+            _body.transform.localRotation = Quaternion.identity;
+            _body.Initialize(bodyData);
+
+            _processor = new GameObject().AddComponent<Processor>();
+            _processor.transform.parent = transform;
+            _processor.transform.localPosition = Vector2.zero;
+            _processor.transform.localRotation = Quaternion.identity;
         }
     }
 }

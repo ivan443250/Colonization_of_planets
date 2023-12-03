@@ -4,19 +4,30 @@ namespace Robot
 {
     public class Body : MonoBehaviour
     {
-        [SerializeField]
         private BodyData _bodyData;
+        private Transform _model;
 
-        public void Initialize(out Transform initBodyModel)
+        private Node[] _nodes;
+
+        public void Initialize(BodyData bodyData)
         {
-            initBodyModel = Instantiate(_bodyData.Model);
-            //for (int i = 0; i < _bodyData.Nodes.Length; i++)
-            //{
-            //    _bodyData.Nodes[i].Initialize(out Transform initNodeModel);
-            //    initNodeModel.SetParent(transform);
-            //    initNodeModel.localPosition = _bodyData.NodesPositions[i];
-            //    initNodeModel.rotation = Quaternion.identity;
-            //}
+            _bodyData = bodyData;
+
+            _model = Instantiate(_bodyData.Model, transform, false);
+            _model.localPosition = Vector3.zero;
+            _model.localRotation = Quaternion.identity;
+
+            int nodesCount = _bodyData.NodesPositions.Length;
+            _nodes = new Node[nodesCount];
+            for (int i = 0;  i < nodesCount; i++)
+            {
+                _nodes[i] = new GameObject().AddComponent<Node>();
+                _nodes[i].transform.parent = transform;
+                _nodes[i].transform.localPosition = _bodyData.NodesPositions[i];
+                _nodes[i].transform.localRotation = Quaternion.identity;
+                _nodes[i].Initialize(_bodyData.NodeModel);
+            }
+
         }
     }
 }

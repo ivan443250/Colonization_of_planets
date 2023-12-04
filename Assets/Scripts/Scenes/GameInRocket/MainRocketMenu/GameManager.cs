@@ -1,5 +1,6 @@
 using Robot;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MainRocketMenu
 {
@@ -20,6 +21,12 @@ namespace MainRocketMenu
             _selectedRobot += changeStep;
             _robots[_selectedRobot].gameObject.SetActive(true);
             CorrectRobotButtons();
+        }
+
+        public void LoadEditRobotMenu()
+        {
+            SaveSceneData();
+            SceneManager.LoadScene(4);
         }
 
         private void Start()
@@ -49,6 +56,11 @@ namespace MainRocketMenu
                 setActiveNextButton = true;
 
             _canvas.SetActiveRobotButtons(setActiveBackButton, setActiveNextButton);
+        }
+
+        private void SaveSceneData()
+        {
+            DataHolder.GameInRocketData = new GameInRocketData(_selectedRobot);
         }
     }
 }

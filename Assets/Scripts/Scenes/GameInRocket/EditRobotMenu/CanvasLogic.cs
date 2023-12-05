@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EditRobotMenu
+namespace EditRobotMenuSpace
 {
     public class CanvasLogic : MonoBehaviour
     {

@@ -4,6 +4,7 @@ namespace Robot
 {
     public class AdditionalDetail : MonoBehaviour
     {
+        protected int nodeIndex;
         private Transform _model;
 
         protected void InstanceModel(Transform model)

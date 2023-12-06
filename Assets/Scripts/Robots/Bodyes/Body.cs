@@ -8,6 +8,8 @@ namespace Robot
 
         private Node[] _nodes;
 
+        private Wheel[] _wheels;
+
         public void Initialize(BodyData bodyData)
         {
             _model = Instantiate(bodyData.Model, transform, false);
@@ -24,7 +26,6 @@ namespace Robot
                 _nodes[i].transform.localRotation = Quaternion.identity;
                 _nodes[i].Initialize(bodyData.NodeModel);
             }
-
         }
     }
 }

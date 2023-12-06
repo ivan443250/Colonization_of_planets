@@ -1093,7 +1093,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.42145783, g: 0.5400523, b: 0.7264151, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.6117647, b: 0.6666667, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2397,7 +2397,7 @@ MonoBehaviour:
   _defaultSpeedChange: 0.812
   _jumpForce: 120
   _groundCheckRadius: 1
-  _maxAdditionalJumps: 1
+  _maxAdditionalJumps: 304
   _groundCheckPoint: {fileID: 1994058887}
   _ground:
     serializedVersion: 2

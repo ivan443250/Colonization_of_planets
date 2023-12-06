@@ -22,6 +22,14 @@ namespace Robot
                     { 1, 1 }
                 }
             ),
+            new RobotData
+            (2,
+                new int[2,2]
+                {
+                    { 0, 0 },
+                    { 1, 1 }
+                }
+            ),
         };
     }
 }

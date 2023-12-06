@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameInRocket/EditRobotMenu.unity
     guid: 20eac19a2e2c9b3479d0556dc8d61a42
+  - enabled: 1
+    path: Assets/Scenes/GameCells.unity
+    guid: 6ba0929299763094ba68230476cfcc78
   m_configObjects: {}

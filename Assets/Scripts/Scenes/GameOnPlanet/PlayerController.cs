@@ -124,7 +124,7 @@ namespace GameOnPlanet
 
         private void Jump()
         {
-            _rigidBody.velocity = new Vector2(_rigidBody.velocity.x, _jumpForce);
+            _rigidBody.AddForce(new Vector2(0f, _jumpForce));
             _animator.SetBool(PlayerAnimatorParameters.IsJump, true);
         }
 

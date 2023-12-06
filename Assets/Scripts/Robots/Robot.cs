@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using UnityEngine;
-using static Cinemachine.CinemachineFreeLook;
 
 namespace Robot
 {

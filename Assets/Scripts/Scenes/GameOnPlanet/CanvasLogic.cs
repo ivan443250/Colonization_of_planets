@@ -43,8 +43,7 @@ namespace GameOnPlanet
 
         private void ShowInteractionButton()
         {
-            if (_dialogPanel1.gameObject.active == false && _dialogPanel2.gameObject.active == false)
-                _interactionButton.gameObject.SetActive(true);
+            _interactionButton.gameObject.SetActive(true);
         }
 
         private void HideInteractionButton()

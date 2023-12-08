@@ -7,15 +7,14 @@ namespace Robot
     {
         private Body _body;
         private Processor _processor;
-        private AdditionalDetail[] _additionalDetails;
 
-        public void Initialize(BodyData bodyData)
+        public void Initialize(RobotData robotData, RobotCollections robotCollections)
         {
             _body = new GameObject().AddComponent<Body>();
             _body.transform.parent = transform;
             _body.transform.localPosition = Vector2.zero;
             _body.transform.localRotation = Quaternion.identity;
-            _body.Initialize(bodyData);
+            _body.Initialize(robotData, robotCollections);
 
             _processor = new GameObject().AddComponent<Processor>();
             _processor.transform.parent = transform;

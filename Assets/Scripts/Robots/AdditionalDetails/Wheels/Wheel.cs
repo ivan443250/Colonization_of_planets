@@ -7,11 +7,12 @@ namespace Robot
         private int _driveDirection;
         private float _rotationSpeed;
 
-        public void Initialize(WheelData wheelData)
+        public void Initialize(WheelData wheelData, int nodeIndex)
         {
             InstanceModel(wheelData.Model);
             _rotationSpeed = wheelData.RotationSpeed;
             _driveDirection = 0;
+            _nodeIndex = nodeIndex;
         }
 
         public void Drive(int driveDirection)
@@ -26,6 +27,9 @@ namespace Robot
 
         private void FixedUpdate()
         {
+            if (_driveDirection == 0)
+                return;
+
             RotateModel(_rotationSpeed, _driveDirection);
         }
     }

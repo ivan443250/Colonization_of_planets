@@ -19,9 +19,8 @@ namespace EditRobotMenuSpace
 
         private void Start()
         {
+            _canvas.Initialize();
             _robotFactory.InstanceRobot(DataHolder.GameInRocketData.SelectedRobotIndex, Vector2.zero);
         }
-
-
     }
 }

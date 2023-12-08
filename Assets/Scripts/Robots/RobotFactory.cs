@@ -11,7 +11,7 @@ namespace Robot
         {
             Robot robot = new GameObject().AddComponent<Robot>();
             robot.transform.position = position;
-            robot.Initialize(_robotCollections.BodyDatas[DataHolder.RobotDatas[robotDataIndex].BodyCollectionIndex]);
+            robot.Initialize(DataHolder.RobotDatas[robotDataIndex], _robotCollections);
             return robot;
         }
 

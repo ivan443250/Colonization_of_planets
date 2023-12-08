@@ -1,7 +1,12 @@
 namespace Robot
 {
-    public abstract class Tool : AdditionalDetail
+    public class Tool : AdditionalDetail
     {
+        protected bool _isPerformingAction;
 
+        protected void InitializeTool()
+        {
+            _isPerformingAction = false;
+        }
     }
 }

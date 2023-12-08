@@ -4,7 +4,7 @@ namespace Robot
 {
     public class AdditionalDetail : MonoBehaviour
     {
-        protected int nodeIndex;
+        protected int _nodeIndex;
         private Transform _model;
 
         protected void InstanceModel(Transform model)
@@ -18,5 +18,7 @@ namespace Robot
         {
             _model.Rotate(new Vector3(0f, 0f, 1f * rotationForce * rotationDirection), Space.Self);
         }
+
+
     }
 }

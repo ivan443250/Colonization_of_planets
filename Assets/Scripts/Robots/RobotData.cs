@@ -6,11 +6,13 @@ public class RobotData
 {
     public int BodyCollectionIndex { get; private set; }
 
-    public int[,] WheelIndexes { get; private set; }
+    public int[] WheelCollectionIndex { get; private set; }
+    public int[] WheelNodeIndex { get; private set; }
 
-    public RobotData(int bodyCollectionIndex, int[,] wheelIndexes)
+    public RobotData(int bodyCollectionIndex, int[] wheelCollectionIndex, int[] wheelNodeIndex)
     {
         BodyCollectionIndex = bodyCollectionIndex;
-        WheelIndexes = wheelIndexes;
+        WheelCollectionIndex = wheelCollectionIndex;
+        WheelNodeIndex = wheelNodeIndex;
     }
 }

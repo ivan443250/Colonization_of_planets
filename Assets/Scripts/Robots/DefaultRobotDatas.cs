@@ -8,27 +8,18 @@ namespace Robot
         { 
             new RobotData
             (0, 
-                new int[2,2]
-                {
-                    { 0, 0 },
-                    { 1, 1 }
-                }
+                new int[] {0},
+                new int[] {0}
             ),
             new RobotData
             (1,
-                new int[2,2]
-                {
-                    { 0, 0 },
-                    { 1, 1 }
-                }
+                new int[] {0, 0},
+                new int[] {0, 1}
             ),
             new RobotData
             (2,
-                new int[2,2]
-                {
-                    { 0, 0 },
-                    { 1, 1 }
-                }
+                new int[] {0},
+                new int[] {0}
             ),
         };
     }

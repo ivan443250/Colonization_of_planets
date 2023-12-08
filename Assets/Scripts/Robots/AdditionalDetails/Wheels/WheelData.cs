@@ -10,4 +10,12 @@ public class WheelData : ScriptableObject
     [SerializeField]
     private float _rotateSpeed;
     public float RotationSpeed => _rotateSpeed;
+
+    private int _indexInCollection;
+    public int IndexInCollection => _indexInCollection;
+
+    public void SetIndexInCollection(int indexInCollection)
+    {
+        _indexInCollection = indexInCollection;
+    }
 }

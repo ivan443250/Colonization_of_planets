@@ -14,6 +14,9 @@ namespace EditRobotMenuSpace
         [SerializeField]
         private ScrollViewLogic[] _scrollPanels;
 
+        [SerializeField]
+        private DataPanellogic _dataPanellogic;
+
         private int _selectedScrollPanelIndex;
 
         public void Initialize()
@@ -26,7 +29,7 @@ namespace EditRobotMenuSpace
             {
                 bodyModels[i] = _robotCollections.BodyDatas[i].Model;
             }
-            _scrollPanels[0].Initialize(bodyModels);
+            _scrollPanels[0].Initialize(bodyModels, _robotCollections, _dataPanellogic, ScrollViewType.Body);
 
             int wheelModelsCount = _robotCollections.WheelDatas.Length;
             Transform[] wheelModels = new Transform[wheelModelsCount];
@@ -34,7 +37,7 @@ namespace EditRobotMenuSpace
             {
                 wheelModels[i] = _robotCollections.WheelDatas[i].Model;
             }
-            _scrollPanels[1].Initialize(wheelModels);
+            _scrollPanels[1].Initialize(wheelModels, _robotCollections, _dataPanellogic, ScrollViewType.Wheel);
 
             CorrectSelectedIndex();
         }

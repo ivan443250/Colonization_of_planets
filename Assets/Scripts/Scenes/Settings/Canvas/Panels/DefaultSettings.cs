@@ -11,6 +11,6 @@ namespace Settings
         public const int SelectedGraphicIndex = 1;
 
         public static KeyCode[] ControlKeys => new KeyCode[] { KeyCode.A, KeyCode.D,  KeyCode.Space, KeyCode.LeftShift};
-        public static float[] SoundsSlidersValues = new float[] { 1f, 1f, 1f };
+        public static float[] SoundsSlidersValues = new float[] { 1f, 0.5f, 0.5f };
     }
 }

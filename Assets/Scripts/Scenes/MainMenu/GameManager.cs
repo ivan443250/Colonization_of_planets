@@ -7,9 +7,13 @@ namespace MainMenu
         [SerializeField]
         private CanvasLogic _canvas;
 
-        void Start()
+        [SerializeField]
+        private AudioSource _mainTheme;
+
+        private void Start()
         {
             _canvas.Initialize();
+            _mainTheme.volume = DataHolder.SettingsData.SoundsPanelDt.SoundSliderValues[2];
         }
     }
 }

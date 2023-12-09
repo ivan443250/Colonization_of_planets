@@ -13,11 +13,15 @@ namespace GameOnPlanet
         [SerializeField]
         private Rocket _rocket;
 
+        [SerializeField]
+        private AudioSource _gameTheme;
+
         private void Start()
         {
             _rocket.Initialize(out UnityEvent show, out UnityEvent hide);
             _canvas.Initialize(show, hide);
             _playerController.Initialize();
+            _gameTheme.volume = DataHolder.SettingsData.SoundsPanelDt.SoundSliderValues[2];
         }
     }
 }

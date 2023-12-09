@@ -25,7 +25,10 @@ namespace MainMenu
 
         private void LoadGameCellsScene()
         {
-            SceneManager.LoadScene(5);
+            if (DataHolder.GameData.IsStartMoveWhatched == false)
+                SceneManager.LoadScene(5);
+            else
+                SceneManager.LoadScene(1);
         }
 
         private void LoadSettingsScene()

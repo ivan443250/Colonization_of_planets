@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Settings;
+using UnityEngine.Events;
 
 namespace GameOnPlanet
 {
@@ -18,29 +19,38 @@ namespace GameOnPlanet
         private float _groundCheckRadius;
         [SerializeField]
         private int _maxAdditionalJumps;
-        private int _currentAdditionalJumps;
-        private float _horisontalInput;
-        private bool _isTurnedRight;
-        private bool _isMainJumpStay;
-
         [SerializeField]
         private Transform _groundCheckPoint;
-        private Rigidbody2D _rigidBody;
-        private Animator _animator;
         [SerializeField]
         private LayerMask _ground;
+
+        private int _currentAdditionalJumps;
+        private float _horisontalInput;
+
+        private bool _isTurnedRight;
+        private bool _isMainJumpStay;
+        private bool _isCanRun;
+
+        private Rigidbody2D _rigidBody;
+        private Animator _animator;
 
         private KeyCode _leftKey;
         private KeyCode _rightKey;
         private KeyCode _jumpKey;
         private KeyCode _runKey;
 
-        public void Initialize()
+        public void Initialize(UnityEvent On, UnityEvent Off)
         {
+            _isCanRun = true;
+            _isTurnedRight = true;
+
+            On.AddListener(SwitchOn);
+            Off.AddListener(SwitchOff);
+
             _rigidBody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
-            _isTurnedRight = true;
             _currentAdditionalJumps = _maxAdditionalJumps;
+
             SettingsData _settingsData = DataHolder.SettingsData;
             KeyCode[] controlKeys = _settingsData.GameControlPanelDt.GetControlKeys();
             _leftKey = controlKeys[0];
@@ -51,6 +61,9 @@ namespace GameOnPlanet
 
         private void Update()
         {
+            if (_isCanRun == false)
+                return;
+
             bool isGrounded = IsGrounded();
 
             if (isGrounded)
@@ -76,6 +89,9 @@ namespace GameOnPlanet
 
         private void FixedUpdate()
         {
+            if (_isCanRun == false)
+                return;
+
             if (Input.GetKey(_leftKey) && Input.GetKey(_rightKey) == false)
             {
                 if (_horisontalInput > 0)
@@ -143,6 +159,17 @@ namespace GameOnPlanet
                 answer = true;
             _animator.SetBool(PlayerAnimatorParameters.IsGrounded, answer);
             return answer;
+        }
+
+        private void SwitchOn()
+        {
+            _isCanRun = true;
+        }
+
+        private void SwitchOff()
+        {
+            _animator.SetBool(PlayerAnimatorParameters.IsRun, false);
+            _isCanRun = false;
         }
     }
 }

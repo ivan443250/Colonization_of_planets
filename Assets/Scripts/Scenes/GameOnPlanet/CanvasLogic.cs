@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -11,17 +12,13 @@ namespace GameOnPlanet
         private Button _interactionButton;
 
         [SerializeField]
-        private GameObject _dialogPanel1;
+        private TextMeshProUGUI _interactionButtonText;
 
-        [SerializeField]
-        private GameObject _dialogPanel2;
-
-        public void Initialize(UnityEvent show, UnityEvent hide)
+        public void Initialize(UnityEvent On, UnityEvent Off)
         {
             _interactionButton.gameObject.SetActive(false);
-            show.AddListener(ShowInteractionButton);
-            hide.AddListener(HideInteractionButton);
-            _dialogPanel2.SetActive(false);
+            On.AddListener(SwitchOn);
+            Off.AddListener(SwitchOff);
         }
 
         public void LoadScene(int sceneIndex)
@@ -29,24 +26,19 @@ namespace GameOnPlanet
             SceneManager.LoadScene(sceneIndex);
         }
 
-        public void CloseDialogPanel1()
+        public void ChangeInteractionButton(bool setActive, string text, out UnityEvent onClick)
         {
-            _dialogPanel1.gameObject.SetActive(false);
-            _dialogPanel2.SetActive(true);
+            _interactionButton.gameObject.SetActive(setActive);
+            _interactionButtonText.text = text;
+            onClick = _interactionButton.onClick;
         }
 
-        public void CloseDialogPanel2()
-        {
-            _dialogPanel2.gameObject.SetActive(false);
-            ShowInteractionButton();
-        }
-
-        private void ShowInteractionButton()
+        private void SwitchOn()
         {
             _interactionButton.gameObject.SetActive(true);
         }
 
-        private void HideInteractionButton()
+        private void SwitchOff()
         {
             _interactionButton.gameObject.SetActive(false);
         }

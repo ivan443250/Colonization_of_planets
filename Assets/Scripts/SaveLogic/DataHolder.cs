@@ -68,4 +68,25 @@ public static class DataHolder
             _gameInRocketData = value;
         }
     }
+
+    private static GameData _gameData;
+    public static GameData GameData
+    {
+        get
+        {
+            if (_gameData == null)
+            {
+                _gameData = SaveSystem.Load<GameData>(SaveFilenames.GameData);
+
+                if (_gameData == null)
+                    _gameData = DefaultGameData.Default;
+            }
+            return _gameData;
+        }
+        set
+        {
+            SaveSystem.Save(value, SaveFilenames.GameData);
+            _gameData = value;
+        }
+    }
 }

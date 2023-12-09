@@ -26,6 +26,9 @@ namespace GameCellsSpace
             {
                 if (_selectedIndex == 6)
                 {
+                    GameData gameData = DataHolder.GameData;
+                    gameData.IsStartMoveWhatched = true;
+                    DataHolder.GameData = gameData;
                     SceneManager.LoadScene(1);
                     return;
                 }

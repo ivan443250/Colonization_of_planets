@@ -10,18 +10,23 @@ namespace GameOnPlanet
         private CanvasLogic _canvas;
         [SerializeField]
         private PlayerController _playerController;
-        [SerializeField]
-        private Rocket _rocket;
 
         [SerializeField]
         private AudioSource _gameTheme;
 
+        [SerializeField]
+        private DialogManager _dialogManager;
+
+        [SerializeField]
+
+
         private void Start()
         {
-            _rocket.Initialize(out UnityEvent show, out UnityEvent hide);
-            _canvas.Initialize(show, hide);
-            _playerController.Initialize();
+            _dialogManager.Initialize(out UnityEvent startDialog, out UnityEvent endDialog);
+            _canvas.Initialize(endDialog, startDialog);
+            _playerController.Initialize(endDialog, startDialog);
             _gameTheme.volume = DataHolder.SettingsData.SoundsPanelDt.SoundSliderValues[2];
+            _dialogManager.StartDialog(0);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace EditRobotLogicMenuSpace
                 panel.SetActive(false);
             _actionPanels[_selectedFunction].SetActive(true);
 
-            _text.text = $"Функция {_selectedFunction + 1}";
+            _text.text = $"Запрограммируй робота (Функция {_selectedFunction + 1})";
         }
     }
 }

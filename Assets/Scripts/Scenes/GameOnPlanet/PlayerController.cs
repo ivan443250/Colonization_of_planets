@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Settings;
 using UnityEngine.Events;
+using RobotV2;
 
 namespace GameOnPlanet
 {
@@ -24,6 +25,19 @@ namespace GameOnPlanet
         [SerializeField]
         private LayerMask _ground;
 
+        [SerializeField]
+        private RobotMiner _robotMinerPref;
+        [SerializeField]
+        private RobotCollector _robotCollectorPref;
+        [SerializeField]
+        private Transform _blocks;
+
+        private RobotMiner _robotMiner;
+        private RobotCollector _robotCollector;
+
+        private UnityEvent _minerStartAction;
+        private UnityEvent _minerStopAction;
+
         private int _currentAdditionalJumps;
         private float _horisontalInput;
 
@@ -38,6 +52,54 @@ namespace GameOnPlanet
         private KeyCode _rightKey;
         private KeyCode _jumpKey;
         private KeyCode _runKey;
+
+        public void MinerStartAction()
+        {
+            _minerStartAction.Invoke();
+        }
+
+        public void MinerStopAction() 
+        {
+            _minerStopAction.Invoke();
+        }
+
+        public void InstanceRobotMiner()
+        {
+            if (_robotMiner == null)
+            {
+                if (IsGrounded() == false)
+                    return;
+
+                _minerStartAction = new UnityEvent();
+                _minerStopAction = new UnityEvent();
+
+                _robotMiner = Instantiate(_robotMinerPref);
+                _robotMiner.transform.position = transform.position;
+                _robotMiner.transform.rotation = Quaternion.identity;
+                _robotMiner.Initialize(_minerStartAction, _minerStopAction, _blocks);
+            }
+            else
+            {
+                Destroy(_robotMiner.gameObject);
+            }
+        }
+
+        public void InstanceRobotCollector()
+        {
+            if (_robotCollector == null)
+            {
+                if (IsGrounded() == false)
+                    return;
+
+                _robotCollector = Instantiate(_robotCollectorPref);
+                _robotCollector.transform.position = transform.position;
+                _robotCollector.transform.rotation = Quaternion.identity;
+            }
+            else
+            {
+                Destroy(_robotCollector.gameObject);
+            }
+        }
 
         public void Initialize(UnityEvent On, UnityEvent Off)
         {

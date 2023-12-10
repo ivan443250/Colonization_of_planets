@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Events;
+using static Unity.Collections.AllocatorManager;
 
 namespace RobotV2
 {
@@ -9,32 +10,48 @@ namespace RobotV2
 
         private Pick _pick;
 
-        private Camera _camera;
+        private CameraTrigger _camera;
 
-        private UnityAction _action1;
-        private UnityAction _action2;
-        private UnityAction _action3;
+        private Transform _blocks;
 
-        public void Initialize()
+        private bool _doAction;
+        private bool _run;
+
+        public void Initialize(UnityEvent startAction, UnityEvent stopAction, Transform blocks)
         {
+            _blocks = blocks;
+            _run = true;
             _wheels = GetComponentsInChildren<Wheel>();
             _pick = GetComponentInChildren<Pick>();
-            _camera = GetComponentInChildren<Camera>(); 
+            _camera = GetComponentInChildren<CameraTrigger>();
+            startAction.AddListener(DoAction);
+            stopAction.AddListener(StopAction);
         }
 
-        private void DoAction1()
+        public void DoAction()
         {
-           
+            _doAction = true;
+
+            Vector2 Scaler = transform.localScale;
+            Scaler.x *= -1;
+            transform.localScale = Scaler;
         }
 
-        private void DoAction2()
+        public void StopAction()
         {
-
+            _doAction = false;
         }
 
-        private void DoAction3()
+        private void Update()
         {
+            if (_doAction && _run)
+                transform.Translate(Vector3.left * Time.deltaTime * 2);
 
+            if (transform.position.x < -377f)
+            {
+                _run = false;
+                Destroy(_blocks.gameObject);
+            }
         }
     }
 }

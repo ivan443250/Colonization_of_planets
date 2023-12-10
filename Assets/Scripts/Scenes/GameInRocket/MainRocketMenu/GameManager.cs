@@ -15,9 +15,6 @@ namespace MainRocketMenu
         [SerializeField]
         private RobotCollector _robotCollectorPref;
 
-        private RobotMiner _robotMiner;
-        private RobotCollector _robotCollector;
-
         private int _selectedRobot;
 
         public void ChangeSelectedRobot(int changeStep)
@@ -37,9 +34,6 @@ namespace MainRocketMenu
         private void Start()
         {
             _canvas.Initialize();
-
-            _robotMiner = Instantiate(_robotMinerPref);
-            _robotCollector = Instantiate(_robotCollectorPref);
 
             for (int i = 0; i < 2; i++)
             {
@@ -77,9 +71,9 @@ namespace MainRocketMenu
         {
             switch (index)
             {
-                case 0: return _robotMiner.gameObject;
+                case 0: return _robotMinerPref.gameObject;
 
-                case 1: return _robotCollector.gameObject;
+                case 1: return _robotCollectorPref.gameObject;
 
                 default: return null;
             }

@@ -14,10 +14,45 @@ namespace GameOnPlanet
         [SerializeField]
         private TextMeshProUGUI _interactionButtonText;
 
+        [SerializeField]
+        private GameObject _robotsPanel;
+
+        [SerializeField]
+        private GameObject _robotMinerPanel;
+
+        [SerializeField]
+        private GameObject _robotCollectorPanel;
+
         private bool _isSwitchedOn;
+        public bool IsDetailsCollected;
+
+        public void CloseRobotMinerPanel()
+        {
+            _robotMinerPanel.SetActive(false);
+        }
+
+        public void OpenRobotMinerPanel()
+        {
+            _robotMinerPanel.SetActive(true);
+            _robotCollectorPanel.SetActive(false);
+        }
+
+        public void CloseRobotCollectorPanel()
+        {
+            _robotCollectorPanel.SetActive(false);
+        }
+
+        public void OpenRobotCollectorPanel()
+        {
+            _robotMinerPanel.SetActive(false);
+            _robotCollectorPanel.SetActive(true);
+        }
 
         public void Initialize(UnityEvent On, UnityEvent Off)
         {
+            _robotMinerPanel.SetActive(false);
+            _robotCollectorPanel.SetActive(false);
+
             _interactionButton.gameObject.SetActive(false);
             On.AddListener(SwitchOn);
             Off.AddListener(SwitchOff);
@@ -46,6 +81,11 @@ namespace GameOnPlanet
         {
             if (_interactionButton.gameObject.activeInHierarchy == true)
                 _interactionButton.gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            _robotsPanel.SetActive(_isSwitchedOn && IsDetailsCollected);
         }
 
         private void SwitchOn()

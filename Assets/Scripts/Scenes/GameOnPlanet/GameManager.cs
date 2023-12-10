@@ -17,11 +17,14 @@ namespace GameOnPlanet
         [SerializeField]
         private DialogManager _dialogManager;
 
-        [SerializeField]
-
+        public int DetailsCount;
 
         private void Start()
         {
+            SaveSystem.Delete(SaveFilenames.GameData);
+
+            DetailsCount = 0;
+
             _dialogManager.Initialize(out UnityEvent startDialog, out UnityEvent endDialog);
             _canvas.Initialize(endDialog, startDialog);
             _playerController.Initialize(endDialog, startDialog);
@@ -29,6 +32,12 @@ namespace GameOnPlanet
 
             if (DataHolder.GameData.EducationDialogsIndexes[0] == false)
                 _dialogManager.StartDialog(0);
+        }
+
+        private void Update()
+        {
+            if (DetailsCount == 4)
+                _canvas.IsDetailsCollected = true;
         }
     }
 }

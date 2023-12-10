@@ -14,17 +14,5 @@ namespace RobotV2
             _animator = GetComponent<Animator>();
             IsWork = false;
         }
-
-        public void StartWork()
-        {
-            IsWork = true;
-            _animator.SetBool("IsWork", true);
-        }
-
-        public void EndWork()
-        {
-            IsWork = false;
-            _animator.SetBool("IsWork", false); 
-        }
     }
 }

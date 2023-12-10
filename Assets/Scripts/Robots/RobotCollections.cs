@@ -1,7 +1,6 @@
 using Unity.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "RobotCollections", menuName = "ScriptableObjects/RobotCollections")]
 public class RobotCollections : ScriptableObject
 {
     [SerializeField]

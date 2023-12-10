@@ -1,4 +1,4 @@
-using Robot;
+using RobotV2;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,33 +10,43 @@ namespace MainRocketMenu
         private CanvasLogic _canvas;
 
         [SerializeField]
-        private RobotFactory _robotFactory;
+        private RobotMiner _robotMinerPref;
 
-        private Robot.Robot[] _robots;
+        [SerializeField]
+        private RobotCollector _robotCollectorPref;
+
+        private RobotMiner _robotMiner;
+        private RobotCollector _robotCollector;
+
         private int _selectedRobot;
 
         public void ChangeSelectedRobot(int changeStep)
         {
-            _robots[_selectedRobot].gameObject.SetActive(false);
+            GetRobotByIndex(_selectedRobot).gameObject.SetActive(false);
             _selectedRobot += changeStep;
-            _robots[_selectedRobot].gameObject.SetActive(true);
+            GetRobotByIndex(_selectedRobot).gameObject.SetActive(true);
             CorrectRobotButtons();
         }
 
         public void LoadEditRobotMenu()
         {
             SaveSceneData();
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(6);
         }
 
         private void Start()
         {
             _canvas.Initialize();
-            _robots = _robotFactory.InstanceAllRobots(Vector2.zero);
-            foreach (Robot.Robot robot in _robots)
-                robot.gameObject.SetActive(false);
+
+            _robotMiner = Instantiate(_robotMinerPref);
+            _robotCollector = Instantiate(_robotCollectorPref);
+
+            for (int i = 0; i < 2; i++)
+            {
+                GetRobotByIndex(i).SetActive(false);
+            }
             _selectedRobot = DataHolder.GameInRocketData.SelectedRobotIndex;
-            _robots[_selectedRobot].gameObject.SetActive(true);
+            GetRobotByIndex(_selectedRobot).SetActive(true);
             CorrectRobotButtons();
         }
 
@@ -50,7 +60,7 @@ namespace MainRocketMenu
             else
                 setActiveBackButton = true;
 
-            if (_selectedRobot == _robots.Length - 1)
+            if (_selectedRobot == 1)
                 setActiveNextButton = false;
             else
                 setActiveNextButton = true;
@@ -61,6 +71,18 @@ namespace MainRocketMenu
         private void SaveSceneData()
         {
             DataHolder.GameInRocketData = new GameInRocketData(_selectedRobot);
+        }
+
+        private GameObject GetRobotByIndex(int index)
+        {
+            switch (index)
+            {
+                case 0: return _robotMiner.gameObject;
+
+                case 1: return _robotCollector.gameObject;
+
+                default: return null;
+            }
         }
     }
 }

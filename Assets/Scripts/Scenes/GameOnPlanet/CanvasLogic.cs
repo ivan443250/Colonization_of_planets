@@ -44,8 +44,11 @@ namespace GameOnPlanet
 
         public void CloseInteractionButton()
         {
-            if (_interactionButton.gameObject.activeInHierarchy == true)
-                _interactionButton.gameObject.SetActive(false);
+            if (_interactionButton.gameObject != null)
+            {
+                if (_interactionButton.gameObject.activeInHierarchy == true)
+                    _interactionButton.gameObject.SetActive(false);
+            }
         }
 
         private void SwitchOn()

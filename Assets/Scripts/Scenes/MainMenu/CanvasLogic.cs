@@ -25,7 +25,8 @@ namespace MainMenu
 
         public void LoadNewGame()
         {
-            SaveSystem.Delete(SaveFilenames.GameData);
+            GameData gameData = DefaultGameData.Default;
+            DataHolder.GameData = gameData;
             SceneManager.LoadScene(5);
         }
 

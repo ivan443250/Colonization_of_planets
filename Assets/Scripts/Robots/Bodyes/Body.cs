@@ -10,6 +10,14 @@ namespace Robot
 
         private Wheel[] _wheels;
 
+        private Battery[] _batteries;
+
+        private Visor[] _visors;
+
+        private MiningTool[] _miningTools;
+
+        private StorageTool[] _storageTools;
+
         public void Initialize(RobotData robotData, RobotCollections robotCollections)
         {
             BodyData bodyData = robotCollections.BodyDatas[robotData.BodyCollectionIndex];
@@ -29,16 +37,28 @@ namespace Robot
                 _nodes[i].Initialize(bodyData.NodeModel);
             }
 
-            int wheelsCount = robotData.WheelCollectionIndex.GetLength(0);
-            _wheels = new Wheel[wheelsCount];
-            for (int i = 0; i < wheelsCount; i++)
+            if (robotData.WheelCollectionIndex != null)
             {
-                _wheels[i] = new GameObject().AddComponent<Wheel>();
-                _wheels[i].transform.parent = _nodes[robotData.WheelNodeIndex[i]].transform;
-                _wheels[i].transform.localPosition = Vector2.zero;
-                _wheels[i].transform.localRotation = Quaternion.identity;
-                _wheels[i].Initialize(robotCollections.WheelDatas[robotData.WheelCollectionIndex[i]], robotData.WheelNodeIndex[i]);
+                int wheelsCount = robotData.WheelCollectionIndex.GetLength(0);
+                if (wheelsCount > 0)
+                {
+                    _wheels = new Wheel[wheelsCount];
+                    for (int i = 0; i < wheelsCount; i++)
+                    {
+                        _wheels[i] = new GameObject().AddComponent<Wheel>();
+                        _wheels[i].transform.parent = _nodes[robotData.WheelNodeIndex[i]].transform;
+                        _wheels[i].transform.localPosition = Vector2.zero;
+                        _wheels[i].transform.localRotation = Quaternion.identity;
+                        _wheels[i].Initialize(robotCollections.WheelDatas[robotData.WheelCollectionIndex[i]], robotData.WheelNodeIndex[i]);
+                    }
+                }
             }
+            
+        }
+
+        public void SaveData(RobotData saveData)
+        {
+            saveData
         }
     }
 }

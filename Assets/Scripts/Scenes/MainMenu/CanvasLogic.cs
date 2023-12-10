@@ -18,9 +18,15 @@ namespace MainMenu
         public void Initialize()
         {
             _continueButton.onClick.AddListener(LoadGameCellsScene);
-            _newGameButton.onClick.AddListener(LoadGameCellsScene);
+            _newGameButton.onClick.AddListener(LoadNewGame);
             _settingsButton.onClick.AddListener(LoadSettingsScene);
             _exitButton.onClick.AddListener(CloseGame);
+        }
+
+        public void LoadNewGame()
+        {
+            SaveSystem.Delete(SaveFilenames.GameData);
+            SceneManager.LoadScene(5);
         }
 
         private void LoadGameCellsScene()

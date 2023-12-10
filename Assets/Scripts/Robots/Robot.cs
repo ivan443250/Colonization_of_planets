@@ -21,5 +21,10 @@ namespace Robot
             _processor.transform.localPosition = Vector2.zero;
             _processor.transform.localRotation = Quaternion.identity;
         }
+
+        public void SaveData()
+        {
+
+        }
     }
 }

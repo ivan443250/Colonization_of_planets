@@ -7,19 +7,28 @@ namespace Robot
         public static RobotData[] Default => new RobotData[] 
         { 
             new RobotData
-            (0, 
-                new int[] {0},
-                new int[] {0}
+            (0,
+                null, null,
+                null, null,
+                null, null,
+                null, null,
+                null, null
             ),
             new RobotData
             (1,
-                new int[] {0, 0},
-                new int[] {0, 1}
+                null, null,
+                null, null,
+                null, null,
+                null, null,
+                null, null
             ),
             new RobotData
             (2,
-                new int[] {0},
-                new int[] {0}
+                null, null,
+                null, null,
+                null, null,
+                null, null,
+                null, null
             ),
         };
     }

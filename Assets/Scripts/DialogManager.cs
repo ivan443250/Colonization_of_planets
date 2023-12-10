@@ -26,6 +26,7 @@ public class DialogManager : MonoBehaviour
 
     public void Initialize(out UnityEvent startDialog, out UnityEvent endDialog)
     {
+        _dialogPanel.gameObject.SetActive(false);
         _isDialogManagerFree = true;
 
         _startDialog = new UnityEvent();
@@ -47,6 +48,9 @@ public class DialogManager : MonoBehaviour
             _dialogPanel.SetActive(false);
             _isDialogManagerFree = true;
             _endDialog.Invoke();
+            GameData dameData = DataHolder.GameData;
+            dameData.EducationDialogsIndexes[_currentDialog] = true;
+            DataHolder.GameData = dameData;
             return;
         }
 

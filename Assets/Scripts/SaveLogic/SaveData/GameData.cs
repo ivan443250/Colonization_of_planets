@@ -4,11 +4,11 @@ using System;
 public class GameData
 {
     public bool IsStartMoveWhatched;
-    public bool IsEducationCompleted;
+    public bool[] EducationDialogsIndexes;
 
-    public GameData(bool isStartMoveWhatched, bool isEducationCompleted)
+    public GameData(bool isStartMoveWhatched, bool[] educationDialogsIndexes)
     {
         IsStartMoveWhatched = isStartMoveWhatched;
-        IsEducationCompleted = isEducationCompleted;
+        EducationDialogsIndexes = educationDialogsIndexes;
     }
 }

@@ -26,7 +26,9 @@ namespace GameOnPlanet
             _canvas.Initialize(endDialog, startDialog);
             _playerController.Initialize(endDialog, startDialog);
             _gameTheme.volume = DataHolder.SettingsData.SoundsPanelDt.SoundSliderValues[2];
-            _dialogManager.StartDialog(0);
+
+            if (DataHolder.GameData.EducationDialogsIndexes[0] == false)
+                _dialogManager.StartDialog(0);
         }
     }
 }

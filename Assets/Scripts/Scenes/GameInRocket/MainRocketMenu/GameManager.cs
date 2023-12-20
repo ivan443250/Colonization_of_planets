@@ -39,6 +39,7 @@ namespace MainRocketMenu
             {
                 GetRobotByIndex(i).SetActive(false);
             }
+            
             _selectedRobot = DataHolder.GameInRocketData.SelectedRobotIndex;
             GetRobotByIndex(_selectedRobot).SetActive(true);
             CorrectRobotButtons();

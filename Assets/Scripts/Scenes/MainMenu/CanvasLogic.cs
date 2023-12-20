@@ -17,7 +17,7 @@ namespace MainMenu
 
         public void Initialize()
         {
-            _continueButton.onClick.AddListener(LoadGameCellsScene);
+            _continueButton.onClick.AddListener(LoadGame);
             _newGameButton.onClick.AddListener(LoadNewGame);
             _settingsButton.onClick.AddListener(LoadSettingsScene);
             _exitButton.onClick.AddListener(CloseGame);
@@ -30,7 +30,7 @@ namespace MainMenu
             SceneManager.LoadScene(5);
         }
 
-        private void LoadGameCellsScene()
+        private void LoadGame()
         {
             if (DataHolder.GameData.IsStartMoveWhatched == false)
                 SceneManager.LoadScene(5);

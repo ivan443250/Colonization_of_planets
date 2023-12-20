@@ -21,8 +21,6 @@ namespace GameOnPlanet
 
         private void Start()
         {
-            SaveSystem.Delete(SaveFilenames.GameData);
-
             DetailsCount = 0;
 
             _dialogManager.Initialize(out UnityEvent startDialog, out UnityEvent endDialog);

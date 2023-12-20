@@ -79,8 +79,7 @@ namespace GameOnPlanet
 
         public void CloseInteractionButton()
         {
-            if (_interactionButton.gameObject.activeInHierarchy == true)
-                _interactionButton.gameObject.SetActive(false);
+            _interactionButton.gameObject.SetActive(false);
         }
 
         private void Update()

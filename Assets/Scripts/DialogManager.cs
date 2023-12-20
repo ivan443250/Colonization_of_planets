@@ -81,4 +81,10 @@ public class DialogManager : MonoBehaviour
             yield return new WaitForSeconds(_timeBetweenPrint);
         }
     }
+
+    private void OnDestroy()
+    {
+        _startDialog.RemoveAllListeners();
+        _endDialog.RemoveAllListeners();
+    }
 }
